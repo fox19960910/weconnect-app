@@ -1,9 +1,9 @@
 import { Controller } from 'react-hook-form'
 
-const FormField = ({ control, label, name, Component, type }) => {
+const FormField = ({ control, label, name, Component, type, placeholder }) => {
     return (
         <div>
-            <p className="text-dark-100 mb-1 text-sm font-bold">{label}</p>
+            <p className="mb-1 text-[13px] text-sm text-dark-100">{label}</p>
             <Controller
                 name={name}
                 control={control}
@@ -15,6 +15,7 @@ const FormField = ({ control, label, name, Component, type }) => {
                             name={name}
                             type={type}
                             control={control}
+                            placeholder={placeholder}
                         />
                     )
                 }}

@@ -4,6 +4,7 @@
 
 body {
     font-family: 'Public Sans Variable', sans-serif;
+    font-size: 15px;
 }
 
 @layer components {
