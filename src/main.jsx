@@ -9,9 +9,12 @@ import ModalProvider from '@context/ModalProvider'
 import { lazy } from 'react'
 import { ThemeProvider } from '@mui/material'
 import theme from '@configs/muiConfigs'
-import RegisterPage from '@pages/RegisterPage'
-import AuthLayout from '@pages/AuthLayout'
-import LoginPage from '@pages/LoginPage'
+import RegisterPage from '@pages/auth/RegisterPage'
+import AuthLayout from '@pages/auth/AuthLayout'
+import LoginPage from '@pages/auth/LoginPage'
+import OTPVerifyPage from '@pages/auth/OTPVerifyPage'
+import { Provider } from 'react-redux'
+import store from '@redux/store'
 const Home = lazy(() => import('@pages/Home.jsx'))
 
 const router = createBrowserRouter([
@@ -22,29 +25,32 @@ const router = createBrowserRouter([
                 path: '/',
                 element: <Home />,
             },
-        ],
-    },
-    {
-        element: <AuthLayout />,
-        children: [
             {
-                path: '/register',
-                element: <RegisterPage />,
-            },
-            {
-                path: '/login',
-                element: <LoginPage />,
+                element: <AuthLayout />,
+                children: [
+                    {
+                        path: '/register',
+                        element: <RegisterPage />,
+                    },
+                    {
+                        path: '/login',
+                        element: <LoginPage />,
+                    },
+                    {
+                        path: '/otp',
+                        element: <OTPVerifyPage />,
+                    },
+                ],
             },
         ],
     },
 ])
 ReactDOM.createRoot(document.getElementById('root')).render(
-    // <React.StrictMode>
-    <ThemeProvider theme={theme}>
-        <ModalProvider>
-            <RouterProvider router={router} />
-        </ModalProvider>
-    </ThemeProvider>
-
-    // </React.StrictMode>
+    <Provider store={store}>
+        <ThemeProvider theme={theme}>
+            <ModalProvider>
+                <RouterProvider router={router} />
+            </ModalProvider>
+        </ThemeProvider>
+    </Provider>
 )

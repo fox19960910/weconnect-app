@@ -19,6 +19,12 @@
             ],
             "@configs/*": [
                 "src/configs/*"
+            ],
+            "@redux/*": [
+                "src/redux/*"
+            ],
+            "@services/*": [
+                "src/services/*"
             ]
         },
     }

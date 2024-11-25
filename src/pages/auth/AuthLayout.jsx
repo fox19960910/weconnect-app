@@ -9,12 +9,12 @@ const retageBottomStyle =
     "before:bg-primary-500 before:content-[''] before:w-[135px] before:h-[135px] before:absolute before:-z-10 before:-bottom-6 before:-right-10 before:rounded-md"
 const AuthLayout = () => {
     return (
-        <div className="bg-primary-500 flex h-screen items-center justify-center text-dark-100">
+        <div className="flex h-screen items-center justify-center bg-primary-500 text-dark-100">
             <div
-                className={`h-fit w-[450px] bg-white px-8 py-10 ${retageTopStyle} ${retageBottomStyle} relative`}
+                className={`h-fit w-[450px] bg-white px-8 py-10 ${retageTopStyle} ${retageBottomStyle} relative rounded-md shadow-lg`}
             >
-                <div className="border-primary-600 absolute -top-16 left-12 -z-10 h-[150px] w-[150px] rounded-[20px] border" />
-                <div className="border-primary-600 absolute -bottom-12 -right-16 -z-10 h-[180px] w-[180px] rounded-[20px] border-2 border-dashed" />
+                <div className="absolute -top-16 left-12 -z-10 h-[150px] w-[150px] rounded-[20px] border border-primary-600" />
+                <div className="absolute -bottom-12 -right-16 -z-10 h-[180px] w-[180px] rounded-[20px] border-2 border-dashed border-primary-600" />
                 <img src="/weconnect-logo.png" alt="" className="mx-auto" />
                 <Suspense fallback={<Loading />}>
                     <Outlet />
