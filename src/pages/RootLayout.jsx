@@ -17,16 +17,18 @@ const RootLayout = () => {
             <Suspense fallback={<Loading />}>
                 <Outlet />
             </Suspense>
-            <Snackbar open={open} onClose={handleClose}>
-                <Alert
-                    onClose={handleClose}
-                    severity={type}
-                    variant="filled"
-                    sx={{ width: '100%' }}
-                >
-                    {message}
-                </Alert>
-            </Snackbar>
+            {message && (
+                <Snackbar open={open} onClose={handleClose}>
+                    <Alert
+                        onClose={handleClose}
+                        severity={type}
+                        variant="filled"
+                        sx={{ width: '100%' }}
+                    >
+                        {message}
+                    </Alert>
+                </Snackbar>
+            )}
         </div>
     )
 }

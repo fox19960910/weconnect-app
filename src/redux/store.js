@@ -1,15 +1,50 @@
-import { configureStore } from '@reduxjs/toolkit'
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import authReducer from '@redux/slices/authSlice'
 import snackbarReducer from '@redux/slices/snackbarSlice'
 import { rootApi } from '@services/rootApi'
-const store = configureStore({
-    reducer: {
+import storage from 'redux-persist/lib/storage'
+import persistReducer from 'redux-persist/es/persistReducer'
+import {
+    FLUSH,
+    PAUSE,
+    PERSIST,
+    PURGE,
+    REGISTER,
+    REHYDRATE,
+} from 'redux-persist'
+import persistStore from 'redux-persist/es/persistStore'
+import { logoutWithMiddleware } from './middleware'
+
+const persisConfig = {
+    key: 'root',
+    version: 1,
+    storage,
+    blacklist: [rootApi.reducerPath],
+}
+const persistedReducer = persistReducer(
+    persisConfig,
+    combineReducers({
         auth: authReducer,
         snackbar: snackbarReducer,
         [rootApi.reducerPath]: rootApi.reducer,
-    },
+    })
+)
+const store = configureStore({
+    reducer: persistedReducer,
     middleware: (getDefaultMiddleware) => {
-        return getDefaultMiddleware().concat(rootApi.middleware)
+        return getDefaultMiddleware({
+            serializableCheck: {
+                ignoreActions: [
+                    FLUSH,
+                    REHYDRATE,
+                    PAUSE,
+                    PERSIST,
+                    PURGE,
+                    REGISTER,
+                ],
+            },
+        }).concat(logoutWithMiddleware, rootApi.middleware)
     },
 })
 export default store
+export const persistor = persistStore(store)
