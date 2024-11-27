@@ -1,5 +1,4 @@
 import { logout } from '@redux/slices/authSlice'
-import { persistor } from '@redux/store'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 const baseQuery = fetchBaseQuery({
@@ -13,9 +12,9 @@ const baseQueryWithForceLogout = async (args, api, extraOptions) => {
     let result = await baseQuery(args, api, extraOptions)
     if (result?.error?.status === 401) {
         api.dispatch(logout())
-        await persistor.purge()
         window.location.herf = '/login'
     }
+    return result
 }
 export const rootApi = createApi({
     reducerPath: 'api',
@@ -42,8 +41,6 @@ export const rootApi = createApi({
             }),
             verifyOTP: builder.mutation({
                 query: ({ email, otp }) => {
-                    console.log(email, otp)
-
                     return {
                         url: 'verify-otp',
                         body: { email, otp },

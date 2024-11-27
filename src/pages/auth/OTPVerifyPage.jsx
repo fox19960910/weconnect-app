@@ -52,7 +52,7 @@ const OTPVerifyPage = () => {
             dispatch(login(data))
             navigate('/')
         }
-    }, [isSuccess, data?.message, dispatch, navigate])
+    }, [isSuccess, data, data?.message, dispatch, navigate])
     return (
         <div>
             <div className="my-6">
