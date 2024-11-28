@@ -1,6 +1,6 @@
 import { Suspense } from 'react'
 import { Outlet } from 'react-router-dom'
-import Loading from '@components/Loading'
+import Loading from '@components/Base/Loading'
 // Supports weights 100-900
 import '@fontsource-variable/public-sans'
 const retageTopStyle =

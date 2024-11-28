@@ -18,6 +18,9 @@ export default {
                     600: '#246AA329',
                 },
             },
+            boxShadow: {
+                paper: '0px 2px 4px 0px rgba(165, 163, 174, 0.3)',
+            },
         },
     },
     plugins: [],

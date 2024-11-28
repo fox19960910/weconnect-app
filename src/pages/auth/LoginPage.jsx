@@ -36,8 +36,7 @@ const LoginPage = () => {
         resolver: yupResolver(formSchema),
     })
 
-    const [login, { data, isLoading, isError, isSuccess, error }] =
-        useLoginMutation()
+    const [login, { data, isError, isSuccess, error }] = useLoginMutation()
 
     const handleSubmitLogin = (formData) => {
         console.log(formData)
@@ -89,7 +88,6 @@ const LoginPage = () => {
                     type="submit"
                     variant="contained"
                     className="!capitalize"
-                    isLoading={isLoading}
                 >
                     Sign in
                 </Button>

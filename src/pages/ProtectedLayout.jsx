@@ -8,16 +8,19 @@ import { Navigate, Outlet } from 'react-router-dom'
 // Supports weights 100-900
 const ProtectedLayout = () => {
     const dispatch = useDispatch()
-    const { data, isLoading, isSuccess } = useGetAuthUserQuery()
-    console.log('checkuser', data?._id)
+    const response = useGetAuthUserQuery()
+    console.log('checkuser', { response })
 
     useEffect(() => {
-        if (isSuccess && data) dispatch(saveUserInfo(data))
-    }, [data, dispatch, isSuccess])
-    if (isLoading) return <CircularProgress />
-    if (!data?._id) {
-        return <Navigate to="/login" />
-    }
+        if (response?.isSuccess && response?.data)
+            dispatch(saveUserInfo(response?.data))
+    }, [response.data, dispatch, response.isSuccess])
+    if (response.isLoading) return <CircularProgress />
+
+    console.log('checkuser', response?.data?._id)
+    // if (!response?.data?._id) {
+    //     return <Navigate to="/login" />
+    // }
 
     return (
         <>
