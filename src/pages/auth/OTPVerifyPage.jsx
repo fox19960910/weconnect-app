@@ -42,6 +42,8 @@ const OTPVerifyPage = () => {
     }
 
     useEffect(() => {
+        console.log('isSuccess', isSuccess)
+
         if (isSuccess) {
             dispatch(
                 openSnackbar({

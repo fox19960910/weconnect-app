@@ -5,8 +5,9 @@ const initialState = {
     maxWith: 'xs',
     fullWidth: true,
     title: null,
-    content: null,
+    contentType: null,
     actions: '',
+    additionalData: {},
 }
 export const dialogSlice = createSlice({
     name: 'dialog',

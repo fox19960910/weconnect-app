@@ -18,7 +18,11 @@ const RootLayout = () => {
                 <Outlet />
             </Suspense>
             {message && (
-                <Snackbar open={open} onClose={handleClose}>
+                <Snackbar
+                    open={open}
+                    onClose={handleClose}
+                    autoHideDuration={3000}
+                >
                     <Alert
                         onClose={handleClose}
                         severity={type}

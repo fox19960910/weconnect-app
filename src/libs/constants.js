@@ -1,0 +1,3 @@
+export const CONTENT_TYPE = {
+    NEW_POST_DIALOG: 'NEW_POST_DIALOG',
+}

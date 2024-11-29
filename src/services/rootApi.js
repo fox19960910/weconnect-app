@@ -1,4 +1,4 @@
-import { logout } from '@redux/slices/authSlice'
+import { login, logout } from '@redux/slices/authSlice'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 const baseQuery = fetchBaseQuery({
@@ -8,17 +8,39 @@ const baseQuery = fetchBaseQuery({
         if (token) headers.set('Authorization', `Bearer ${token}`)
     },
 })
-const baseQueryWithForceLogout = async (args, api, extraOptions) => {
+const baseQueryWithReAuth = async (args, api, extraOptions) => {
     let result = await baseQuery(args, api, extraOptions)
     if (result?.error?.status === 401) {
-        api.dispatch(logout())
-        window.location.herf = '/login'
+        const refreshToken = api.getState().auth.refreshToken
+        if (refreshToken) {
+            const refreshResult = await baseQuery(
+                {
+                    url: 'refresh-token',
+                    body: { refreshToken },
+                    method: 'POST',
+                },
+                api,
+                extraOptions
+            )
+
+            const newAccessToken = refreshResult?.data?.accessToken
+
+            if (newAccessToken) {
+                api.dispatch(
+                    login({ accessToken: newAccessToken, refreshToken })
+                )
+                result = await baseQuery(args, api, extraOptions)
+            } else {
+                api.dispatch(logout())
+                window.location.herf = '/login'
+            }
+        }
     }
     return result
 }
 export const rootApi = createApi({
     reducerPath: 'api',
-    baseQuery: baseQueryWithForceLogout,
+    baseQuery: baseQueryWithReAuth,
     endpoints: (builder) => {
         return {
             register: builder.mutation({
@@ -48,8 +70,26 @@ export const rootApi = createApi({
                     }
                 },
             }),
+            refreshToken: builder.mutation({
+                query: ({ refreshToken }) => {
+                    return {
+                        url: '/refresh-token',
+                        method: 'POST',
+                        body: { refreshToken },
+                    }
+                },
+            }),
             getAuthUser: builder.query({
                 query: () => '/auth-user',
+            }),
+            createPost: builder.mutation({
+                query: (formData) => {
+                    return {
+                        url: '/posts',
+                        method: 'POST',
+                        body: formData,
+                    }
+                },
             }),
         }
     },
@@ -60,4 +100,5 @@ export const {
     useLoginMutation,
     useVerifyOTPMutation,
     useGetAuthUserQuery,
+    useCreatePostMutation,
 } = rootApi

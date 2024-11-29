@@ -4,7 +4,7 @@ import './index.css'
 
 import RootLayout from '@pages/RootLayout.jsx'
 
-import Dialog from '@components/Base/Dialog'
+import Dialog from '@components/Dialog'
 import theme from '@configs/muiConfigs'
 import { ThemeProvider } from '@mui/material'
 import AuthLayout from '@pages/auth/AuthLayout'

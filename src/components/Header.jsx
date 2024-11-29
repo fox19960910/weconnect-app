@@ -90,7 +90,7 @@ const Header = () => {
                             onClick={handleUserProfileClick}
                         >
                             {/* <AccountCircle /> */}
-                            <Avatar>
+                            <Avatar className="!bg-primary-100">
                                 {userInfo?.fullName?.[0]?.toUpperCase()}
                             </Avatar>
                         </IconButton>
