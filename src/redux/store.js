@@ -21,11 +21,7 @@ const persisConfig = {
     key: 'root',
     version: 1,
     storage,
-    blacklist: [
-        rootApi.reducerPath,
-        settingREducer.reducerPath,
-        dialogReducer.reducerPath,
-    ],
+    blacklist: [rootApi.reducerPath, settingREducer, dialogReducer],
 }
 const persistedReducer = persistReducer(
     persisConfig,

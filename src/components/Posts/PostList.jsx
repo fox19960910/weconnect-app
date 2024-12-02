@@ -1,5 +1,11 @@
+import PostItem from './PostItem'
+
 const PostList = () => {
-    return <div>PostList</div>
+    return (
+        <div>
+            <PostItem />
+        </div>
+    )
 }
 
 export default PostList

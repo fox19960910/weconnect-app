@@ -5,6 +5,7 @@
 body {
     font-family: 'Public Sans Variable', sans-serif;
     font-size: 15px;
+    line-height: 1.4;
 }
 
 @layer components {
@@ -12,6 +13,6 @@ body {
         @apply mx-auto flex max-w-screen-lg gap-6 px-6 pb-10 pt-20 sm:gap-8 lg:pt-24;
     }
     .paper {
-        @apply shadow-paper rounded-[6px];
+        @apply rounded-[6px] shadow-paper;
     }
 }
