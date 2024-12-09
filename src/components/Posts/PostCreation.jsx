@@ -77,7 +77,7 @@ const PostCreation = () => {
         )
     }
     return (
-        <div className="paper flex gap-2 bg-white px-4 py-3 sm:px-6 sm:py-5">
+        <div className="paper mb-4 flex gap-2 bg-white px-4 py-3 sm:px-6 sm:py-5">
             <Avatar className="!bg-primary-100">
                 {userInfo?.fullName?.[0]?.toUpperCase()}
             </Avatar>

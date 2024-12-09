@@ -91,6 +91,9 @@ export const rootApi = createApi({
                     }
                 },
             }),
+            getPost: builder.query({
+                query: () => '/posts',
+            }),
         }
     },
 })
@@ -101,4 +104,5 @@ export const {
     useVerifyOTPMutation,
     useGetAuthUserQuery,
     useCreatePostMutation,
+    useGetPostQuery,
 } = rootApi
