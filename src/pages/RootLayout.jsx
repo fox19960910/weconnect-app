@@ -1,6 +1,5 @@
 import { Suspense } from 'react'
 import { Outlet } from 'react-router-dom'
-import Loading from '@components/Base/Loading'
 // Supports weights 100-900
 import '@fontsource-variable/public-sans'
 import { Alert, Snackbar } from '@mui/material'
@@ -14,7 +13,7 @@ const RootLayout = () => {
     }
     return (
         <div className="text-dark-100">
-            <Suspense fallback={<Loading />}>
+            <Suspense fallback={null}>
                 <Outlet />
             </Suspense>
             {message && (

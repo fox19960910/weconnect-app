@@ -16,6 +16,7 @@ import store, { persistor } from '@redux/store'
 import { lazy } from 'react'
 import { Provider } from 'react-redux'
 import { PersistGate } from 'redux-persist/integration/react'
+import Loading from '@components/Base/Loading'
 const Home = lazy(() => import('@pages/Home.jsx'))
 
 const router = createBrowserRouter([
@@ -53,7 +54,7 @@ const router = createBrowserRouter([
 ])
 ReactDOM.createRoot(document.getElementById('root')).render(
     <Provider store={store}>
-        <PersistGate loading={<p>loading..</p>} persistor={persistor}>
+        <PersistGate loading={<Loading />} persistor={persistor}>
             <ThemeProvider theme={theme}>
                 <RouterProvider router={router} />
                 <Dialog />

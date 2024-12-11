@@ -5,7 +5,7 @@ import { saveUserInfo } from '@redux/slices/authSlice'
 import { useGetAuthUserQuery } from '@services/rootApi'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { Navigate, Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 // Supports weights 100-900
 const ProtectedLayout = () => {
     const dispatch = useDispatch()
@@ -19,9 +19,9 @@ const ProtectedLayout = () => {
 
     if (response.isLoading) return <Loading />
 
-    if (!response?.data?._id) {
-        return <Navigate to="/login" />
-    }
+    // if (!response?.data?._id) {
+    //     return <Navigate to="/login" />
+    // }
 
     return (
         <>

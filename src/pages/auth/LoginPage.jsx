@@ -36,7 +36,8 @@ const LoginPage = () => {
         resolver: yupResolver(formSchema),
     })
 
-    const [login, { data, isError, isSuccess, error }] = useLoginMutation()
+    const [login, { data, isError, isSuccess, error, isLoading }] =
+        useLoginMutation()
 
     const handleSubmitLogin = (formData) => {
         console.log(formData)
@@ -44,7 +45,7 @@ const LoginPage = () => {
     }
 
     useEffect(() => {
-        if (isSuccess) {
+        if (isSuccess && data) {
             dispatch(
                 openSnackbar({
                     message: data?.message,
@@ -57,7 +58,7 @@ const LoginPage = () => {
                 },
             })
         }
-    }, [isSuccess, data?.message, dispatch, navigate, getValues])
+    }, [isSuccess, data, data?.message, dispatch, navigate, getValues])
     return (
         <div>
             <div className="my-6">
@@ -88,6 +89,7 @@ const LoginPage = () => {
                     type="submit"
                     variant="contained"
                     className="!capitalize"
+                    disabled={isLoading}
                 >
                     Sign in
                 </Button>

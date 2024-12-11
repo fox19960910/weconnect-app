@@ -23,12 +23,12 @@ const PostItem = ({
                 </div>
                 <div className="mb-3">
                     <p className="mb-3">{content}</p>
-                    <img src="/bg-post.jpg" alt="" />
+                    <img src={image} alt="" />
                 </div>
                 <div>
                     <div className="flex justify-between">
                         <div className="flex gap-1">
-                            <img src={image} alt="" />
+                            <img src="/assets/icons/thumb-up.svg" alt="" />
                             <p>{likes.length}</p>
                         </div>
                         <div>

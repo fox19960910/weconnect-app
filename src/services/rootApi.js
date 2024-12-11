@@ -6,34 +6,42 @@ const baseQuery = fetchBaseQuery({
     prepareHeaders: (headers, { getState }) => {
         const token = getState().auth.accessToken
         if (token) headers.set('Authorization', `Bearer ${token}`)
+        return headers
     },
 })
 const baseQueryWithReAuth = async (args, api, extraOptions) => {
     let result = await baseQuery(args, api, extraOptions)
     if (result?.error?.status === 401) {
-        const refreshToken = api.getState().auth.refreshToken
-        if (refreshToken) {
-            const refreshResult = await baseQuery(
-                {
-                    url: 'refresh-token',
-                    body: { refreshToken },
-                    method: 'POST',
-                },
-                api,
-                extraOptions
-            )
+        if (result?.error?.data?.message === 'Token has expired.') {
+            const refreshToken = api.getState().auth.refreshToken
 
-            const newAccessToken = refreshResult?.data?.accessToken
-
-            if (newAccessToken) {
-                api.dispatch(
-                    login({ accessToken: newAccessToken, refreshToken })
+            if (refreshToken) {
+                const refreshResult = await baseQuery(
+                    {
+                        url: 'refresh-token',
+                        body: { refreshToken },
+                        method: 'POST',
+                    },
+                    api,
+                    extraOptions
                 )
-                result = await baseQuery(args, api, extraOptions)
-            } else {
-                api.dispatch(logout())
-                window.location.herf = '/login'
+
+                const newAccessToken = refreshResult?.data?.accessToken
+
+                if (newAccessToken) {
+                    api.dispatch(
+                        login({ accessToken: newAccessToken, refreshToken })
+                    )
+                    result = await baseQuery(args, api, extraOptions)
+                } else {
+                    api.dispatch(logout())
+                    window.location.herf = '/login'
+                }
             }
+        } else {
+            console.log('here')
+
+            window.location.href = '/login'
         }
     }
     return result
@@ -90,9 +98,17 @@ export const rootApi = createApi({
                         body: formData,
                     }
                 },
+                invalidatesTags: ['getPost'],
             }),
             getPost: builder.query({
-                query: () => '/posts',
+                query: ({ offset, limit }) => {
+                    return {
+                        url: '/posts',
+                        method: 'GET',
+                        params: { offset, limit },
+                    }
+                },
+                providesTags: ['getPost'],
             }),
         }
     },
